@@ -329,7 +329,7 @@ export const AutocompleteDropdown = memo(
             onBlur={onBlur}
             onFocus={onFocus}
             onSubmitEditing={onSubmit}
-            placeholderTextColor="#d0d4dc"
+            placeholderTextColor={props.placeholderTextColor}
             {...props.textInputProps}
             style={{
               ...styles.Input,
@@ -370,7 +370,7 @@ export const AutocompleteDropdown = memo(
                 <View>
                   {scrollContent.length > 0
                     ? scrollContent
-                    : !!searchText && <NothingFound emptyResultText={props.emptyResultText} />}
+                    : !!searchText && <NothingFound emptyResultText={props.emptyResultText} emptyTextColor={props.emptyTextColor} />}
                 </View>
               }
             </ScrollViewComponent>
@@ -408,7 +408,9 @@ AutocompleteDropdown.propTypes = {
   ChevronIconComponent: PropTypes.element,
   ClearIconComponent: PropTypes.element,
   ScrollViewComponent: PropTypes.elementType,
-  emptyResultText: PropTypes.string
+  emptyResultText: PropTypes.string,  
+  placeholderTextColor : PropTypes.string,  
+  emptyTextColor : PropTypes.string,
 }
 
 const styles = ScaledSheet.create({
@@ -430,14 +432,13 @@ const styles = ScaledSheet.create({
     width: '100%',
     zIndex: 9,
     borderRadius: 5,
-    shadowColor: '#00000099',
+    shadowColor: '#222',
     shadowOffset: {
       width: 0,
-      height: 12,
+      height: 3,
     },
     shadowOpacity: 0.3,
     shadowRadius: 15.46,
-
-    elevation: 20,
+    elevation: 3,    
   },
 })
