@@ -365,6 +365,8 @@ export const AutocompleteDropdown = memo(
               style={{ maxHeight: suggestionsListMaxHeight }}
               nestedScrollEnabled={true}
               onScrollBeginDrag={Keyboard.dismiss}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
             >
               {
                 <View>
@@ -415,7 +417,8 @@ AutocompleteDropdown.propTypes = {
 
 const styles = ScaledSheet.create({
   container: {
-    marginVertical: 2,
+    marginVertical: 0, 
+    marginBottom:2 
   },
   Input: {
     width: '100%',
