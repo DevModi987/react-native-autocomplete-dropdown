@@ -312,7 +312,7 @@ export const AutocompleteDropdown = memo(
         style={[
           styles.container,
           props.containerStyle,
-          Platform.select({ ios: { zIndex: 1 } }),
+          Platform.select({ ios: { zIndex: 10000 } }),
         ]}
       >
         {/* it's necessary use onLayout here for Androd (bug?) */}
@@ -438,10 +438,10 @@ const styles = ScaledSheet.create({
     shadowColor: '#222',
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 1,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 15.46,
+    shadowOpacity: 0.1,
+    shadowRadius: 0,
     elevation: 3,    
   },
 })
