@@ -233,7 +233,7 @@ export const AutocompleteDropdown = memo(
 
       let new_dataset = dataSet.filter((item,index)=>{
         return item.isold == 1;
-    })
+      })
 
       const content = []
       const olditemsCount = old_dataset.length - 1;
@@ -388,6 +388,7 @@ export const AutocompleteDropdown = memo(
             value={searchText}
             onChangeText={onChangeText}
             autoCorrect={false}
+            autoFocus={true}
             onBlur={onBlur}
             onFocus={onFocus}
             onSubmitEditing={onSubmit}
