@@ -18,6 +18,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Text
 } from 'react-native'
 import { moderateScale, ScaledSheet } from 'react-native-size-matters'
 import { withFadeAnimation } from './HOC/withFadeAnimation'
@@ -176,11 +177,11 @@ export const AutocompleteDropdown = memo(
       (item, searchText) => {
         if (typeof props.renderItem === 'function') {
           const LI = props.renderItem(item, searchText)
-          return (
-            <TouchableOpacity onPress={() => _onSelectItem(item)}>
+          return (<>            
+            <TouchableOpacity onPress={() => _onSelectItem(item)} disabled={item.isold == 0 ? true : false}>              
               {LI}
             </TouchableOpacity>
-          )
+            </>)
         }
         let titleHighlighted = ''
         let titleStart = item.title
@@ -226,21 +227,80 @@ export const AutocompleteDropdown = memo(
         return null
       }
 
+      let old_dataset = dataSet.filter((item,index)=>{
+          return item.isold == 0;
+      })
+
+      let new_dataset = dataSet.filter((item,index)=>{
+        return item.isold == 1;
+    })
+
       const content = []
-      const itemsCount = dataSet.length - 1
-      dataSet.forEach((item, i) => {
+      const olditemsCount = old_dataset.length - 1;
+      const newitemsCount = new_dataset.length - 1;
+
+      content.push(<View key='0'>
+                    <View style={{borderWidth:0,padding:10,backgroundColor:props.listHeadbg}}>
+                      <Text style={{fontFamily: 'Montserrat-SemiBold',color:props.listHeadColor,fontSize:props.listHeadfontSize}}>{props.oldListName}</Text>                      
+                    </View>        
+                    {ItemSeparatorComponent}
+                  </View>
+      )
+      old_dataset.forEach((item, i) => {
         const listItem = renderItem(item, searchText)
         if (listItem) {
           content.push(
             <View key={item.id}>
               {listItem}
-              {i < itemsCount && ItemSeparatorComponent}
+              {i < olditemsCount && ItemSeparatorComponent}
             </View>
           )
         }
       })
+
+      content.push(<View key='1'>
+            <View style={{borderWidth:0,padding:10,backgroundColor:props.listHeadbg}}>
+              <Text style={{fontFamily: 'Montserrat-SemiBold',color:props.listHeadColor,fontSize:props.listHeadfontSize}}>{props.newListName}</Text>                      
+            </View>        
+            {ItemSeparatorComponent}
+          </View>
+      )
+      new_dataset.forEach((item, i) => {
+        const listItem = renderItem(item, searchText)
+        if (listItem) {
+          content.push(
+            <View key={item.id}>
+              {listItem}
+              {i < newitemsCount && ItemSeparatorComponent}
+            </View>
+          )
+        }
+      })
+
       return content
     }, [dataSet]) // don't use searchText here because it will rerender list twice every time
+
+
+    // const scrollContent = useMemo(() => {
+    //   if (!Array.isArray(dataSet)) {
+    //     return null
+    //   }
+
+    //   const content = []
+    //   const itemsCount = dataSet.length - 1
+    //   dataSet.forEach((item, i) => {
+    //     const listItem = renderItem(item, searchText)
+    //     if (listItem) {
+    //       content.push(
+    //         <View key={item.id}>
+    //           {listItem}
+    //           {i < itemsCount && ItemSeparatorComponent}
+    //         </View>
+    //       )
+    //     }
+    //   })
+    //   return content
+    // }, [dataSet])
 
     const onClearPress = useCallback(() => {
       setSearchText('')
@@ -366,7 +426,7 @@ export const AutocompleteDropdown = memo(
               nestedScrollEnabled={true}
               onScrollBeginDrag={Keyboard.dismiss}
               showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}              
             >
               {
                 <View>
@@ -413,6 +473,11 @@ AutocompleteDropdown.propTypes = {
   emptyResultText: PropTypes.string,  
   placeholderTextColor : PropTypes.string,  
   emptyTextColor : PropTypes.string,
+  oldListName : PropTypes.string,
+  newListName : PropTypes.string,
+  listHeadColor : PropTypes.string,
+  listHeadbg : PropTypes.string,
+  listHeadfontSize : PropTypes.number,
 }
 
 const styles = ScaledSheet.create({
