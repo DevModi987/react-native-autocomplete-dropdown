@@ -239,13 +239,14 @@ export const AutocompleteDropdown = memo(
       const olditemsCount = old_dataset.length - 1;
       const newitemsCount = new_dataset.length - 1;
 
-      content.push(<View key='0'>
-                    <View style={{borderWidth:0,padding:10,backgroundColor:props.listHeadbg}}>
-                      <Text style={{fontFamily: 'Montserrat-SemiBold',color:props.listHeadColor,fontSize:props.listHeadfontSize}}>{props.oldListName}</Text>                      
-                    </View>        
-                    {ItemSeparatorComponent}
-                  </View>
-      )
+      old_dataset.length > 0 &&
+      (content.push(<View key='0'>
+                      <View style={{borderWidth:0,padding:10,backgroundColor:props.listHeadbg}}>
+                        <Text style={{fontFamily: 'Montserrat-SemiBold',color:props.listHeadColor,fontSize:props.listHeadfontSize}}>{props.oldListName}</Text>                      
+                      </View>        
+                      {ItemSeparatorComponent}
+                    </View>
+      ))
       old_dataset.forEach((item, i) => {
         const listItem = renderItem(item, searchText)
         if (listItem) {
@@ -258,13 +259,14 @@ export const AutocompleteDropdown = memo(
         }
       })
 
-      content.push(<View key='1'>
+      new_dataset.length > 0 && 
+      (content.push(<View key='1'>
             <View style={{borderWidth:0,padding:10,backgroundColor:props.listHeadbg}}>
               <Text style={{fontFamily: 'Montserrat-SemiBold',color:props.listHeadColor,fontSize:props.listHeadfontSize}}>{props.newListName}</Text>                      
             </View>        
             {ItemSeparatorComponent}
           </View>
-      )
+      ))
       new_dataset.forEach((item, i) => {
         const listItem = renderItem(item, searchText)
         if (listItem) {
